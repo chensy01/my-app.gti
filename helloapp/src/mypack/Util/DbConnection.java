@@ -2,7 +2,8 @@ package mypack.Util;
 
 import java.io.*;
 import java.sql.*;
-class DbConnection{
+
+public class DbConnection{
 	public static	IEnvProperties env;	
 
 	private PreparedStatement pstmt = null;
@@ -71,12 +72,15 @@ class DbConnection{
 
 
 	//执行插入、删除和更新操作  
-    	synchronized public void execute(String sql) throws SQLException {  
+    	synchronized public int execute(String sql) throws SQLException {  
         	this.pstmt = con.prepareStatement(sql);  
         	if(pstmt != null){  
-            		pstmt.executeUpdate(sql);
-			con.commit();  
+            		int i =  pstmt.executeUpdate(sql);
+					con.commit();
+					return i;  
         	}else{  
+
+        			return 0;
             		//Log log = LogFactory.getLog("mylog");  
             		//log.error("数据库插入数据出错");  
        		}  
