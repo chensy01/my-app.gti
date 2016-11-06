@@ -46,4 +46,12 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     <tx:annotation-driven transaction-manager="txManager"/>
+
+
+    <!--spring test by csy-->
+    <bean id="userid" class="mypack.Entity.UsersId">
+    </bean>
+    <bean id="user" class="mypack.Entity.Users">
+        <property name="id" ref="userid"/>
+    </bean>
 </beans>

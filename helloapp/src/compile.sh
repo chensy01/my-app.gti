@@ -20,6 +20,8 @@ cp mypack/Util/EnvProperties.class ../WEB-INF/classes/mypack/Util/
 javac mypack/Util/DbConnection.java
 cp mypack/Util/DbConnection.class ../WEB-INF/classes/mypack/Util/
 
+javac -classpath .:${HELLOAPPLIB} mypack/Init.java
+cp mypack/Init.class ../WEB-INF/classes/mypack/
 
 javac -classpath .:../WEB-INF/classes/mypack/Util:../WEB-INF/classes/mypack/Entity/User.class:${HELLOAPPLIB} mypack/DispatcherServlet.java
 cp mypack/DispatcherServlet.class ../WEB-INF/classes/mypack/

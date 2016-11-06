@@ -14,6 +14,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import mypack.Entity.*;
 import org.springframework.context.support.*;
 import org.springframework.context.*;
+import org.springframework.web.context.support.*;
 
 
 
@@ -21,6 +22,7 @@ public class DispatcherServlet extends HttpServlet{
 	private String target="/hello.jsp";
 	private String welcome="/welcome.jsp";	
 	private SessionFactory sessionFactory; //for hibernate
+	ApplicationContext ac;
 	public void init(ServletConfig config)	throws ServletException{
 			super.init(config);
 
@@ -40,9 +42,11 @@ public class DispatcherServlet extends HttpServlet{
 			// }
 
 			//use spring
-			ApplicationContext ac = new FileSystemXmlApplicationContext("applicationContext.xml");
+			//ac = new FileSystemXmlApplicationContext("applicationContext.xml");
+			//sessionFactory = (SessionFactory)ac.getBean("sessionFactory");
+
+			ac = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
 			sessionFactory = (SessionFactory)ac.getBean("sessionFactory");
-		
 	}
 
 	public void doGet(HttpServletRequest request,
@@ -72,8 +76,13 @@ public class DispatcherServlet extends HttpServlet{
 			//user hibernate to save username and password
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			UsersId id = new UsersId(username, password, new Date());
-			session.save( new Users(id));
+			// UsersId id = new UsersId(username, password, new Date());
+			// session.save( new Users(id));
+			Users user = (Users)ac.getBean("user");
+			user.getId().setName(username);
+			user.getId().setPassword(password);
+			user.getId().setRegisterTime(new Date());
+			session.save(user);
 			//session.save( new User( "A follow up event", new Date() ) );
 			session.getTransaction().commit();
 			session.close();
