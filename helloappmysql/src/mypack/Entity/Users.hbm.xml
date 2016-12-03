@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 13, 2016 12:44:40 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="mypack.Entity.Users" table="users" catalog="jack">
+        <id name="username" type="string">
+            <column name="username" length="100" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="100" />
+        </property>
+        <property name="registerTime" type="timestamp">
+            <column name="register_time" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>
